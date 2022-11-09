@@ -15,10 +15,10 @@ First, clone the project:
 ```bash
 git clone https://github.com/Bolu1/todo-app-task.git
 ```
-Create two tables in Dynamodb named "directories" and "todo" with key index id
+Create two tables in Dynamodb named "directories" and "todo" with key index id both of hash type number
 
 Start your DynamoDb serer:
-```
+```bash
 docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb
 ```
 DynamoDb now runs on [http://localhost:8000](http://localhost:8000).
