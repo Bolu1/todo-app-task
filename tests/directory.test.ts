@@ -11,7 +11,7 @@ describe("POST /directory/create", ()=>{
                 name: "shopping"
            })
            expect(response.statusCode).toBe(201)
-       }, 100000)
+       }, 100000) 
        
     })
 
