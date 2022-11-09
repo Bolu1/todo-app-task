@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/async";
-import { CreatedResponse, SuccessResponse } from "../core/ApiResponse";
+import { BadRequestDataResponse, CreatedResponse, SuccessResponse } from "../core/ApiResponse";
 import { Input } from "../interfaces/directory.interfaces";
+import { BadRequestDataError } from "../core/ApiError";
 const {
   createDirectory,
   getDirectories,
@@ -11,6 +12,9 @@ const {
 
 exports.create = asyncHandler(async (req: Request, res: Response) => {
   const payload: Input = req.body;
+  if(!payload.name){
+    throw new BadRequestDataError("title is needed", [])
+  }
   payload.created = Date.now();
   // use random number as id
   payload.id = Date.now();
@@ -32,6 +36,9 @@ exports.list = asyncHandler(async (req: Request, res: Response) => {
 
 exports.remove = asyncHandler(async (req: Request, res: Response) => {
   const id: number = parseInt(req.body.id);
+  if(!id){
+    throw new BadRequestDataError("Id is required", [])
+  }
   const items = await getItemsByDirectory(id);
   await deleteDirectory(id, items.Items);
   return new SuccessResponse("Success", []).send(res);
